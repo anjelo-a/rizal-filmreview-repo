@@ -1,65 +1,145 @@
-import Image from "next/image";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import { remark } from 'remark';
+import html from 'remark-html';
 
-export default function Home() {
+import Hero from '@/components/Hero';
+import Section from '@/components/Section';
+import HighlightCard from '@/components/HighlightCard';
+import AnalysisCard from '@/components/AnalysisCard';
+import ReferenceItem from '@/components/ReferenceItem';
+import ScrollReveal from '@/components/ScrollReveal';
+import ImageReveal from '@/components/ImageReveal';
+import QuoteSection from '@/components/QuoteSection';
+
+import { highlights } from '@/data/highlights';
+import { analysisItems } from '@/data/analysis';
+import { references } from '@/data/references';
+import { film } from '@/data/film';
+
+async function getMarkdownContent(fileName: string) {
+  const filePath = path.join(process.cwd(), 'src', 'content', `${fileName}.md`);
+  try {
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const matterResult = matter(fileContents);
+    const processedContent = await remark()
+      .use(html)
+      .process(matterResult.content);
+    const contentHtml = processedContent.toString();
+    return contentHtml;
+  } catch (error) {
+    return `<p>Error loading content for ${fileName}. Please create the file src/content/${fileName}.md</p>`;
+  }
+}
+
+export default async function Page() {
+  const introduction = await getMarkdownContent('introduction');
+  const summary = await getMarkdownContent('summary');
+  const analysis = await getMarkdownContent('analysis');
+  const reflection = await getMarkdownContent('reflection');
+  const conclusion = await getMarkdownContent('conclusion');
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div>
+      <Hero />
+      <div className="container mx-auto px-4">
+        <ScrollReveal>
+          <Section id="introduction" title="Introduction">
+            <div className="prose lg:prose-xl max-w-none" dangerouslySetInnerHTML={{ __html: introduction }} />
+          </Section>
+        </ScrollReveal>
+
+        <div className="section-divider">
+          <ScrollReveal>
+            <Section id="summary" title="Film Summary">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div className="prose lg:prose-xl max-w-none" dangerouslySetInnerHTML={{ __html: summary }} />
+                <ImageReveal src={film.poster} alt={`${film.title} poster`} className="rounded-lg shadow-lg w-full h-auto" />
+              </div>
+            </Section>
+          </ScrollReveal>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        
+        <QuoteSection />
+
+        <div className="section-divider">
+          <ScrollReveal>
+            <Section
+              id="analysis"
+              title="Analysis"
+              className="py-16 min-h-[70vh] flex items-center"
+              containerClassName="mx-auto w-full max-w-6xl px-6"
+              contentClassName="max-w-none"
+            >
+              <div className="prose lg:prose-xl max-w-none" dangerouslySetInnerHTML={{ __html: analysis }} />
+              <div className="mt-8">
+                <ImageReveal src="/images/rizalindapitan2.jpg" alt="Scene from Rizal in Dapitan" className="rounded-lg shadow-lg w-full h-auto" />
+              </div>
+              <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {analysisItems.map((item, index) => (
+                  <AnalysisCard
+                    key={item.title}
+                    item={item}
+                    delay={index * 100}
+                    direction={index % 2 === 0 ? "left" : "right"}
+                  />
+                ))}
+              </div>
+            </Section>
+          </ScrollReveal>
         </div>
-      </main>
+
+        <div className="section-divider">
+          <Section
+            id="highlights"
+            title="Notes & Highlights"
+            className="py-16 min-h-[70vh] flex items-center"
+            containerClassName="mx-auto w-full max-w-6xl px-6"
+            contentClassName="max-w-none"
+          >
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {highlights.map((highlight, index) => (
+                <HighlightCard
+                  key={highlight.title}
+                  item={highlight}
+                  delay={index * 100}
+                  direction={index % 2 === 0 ? "left" : "right"}
+                />
+              ))}
+            </div>
+          </Section>
+        </div>
+
+        <div className="section-divider">
+          <ScrollReveal>
+            <Section id="reflection" title="Reflection">
+              <div className="prose lg:prose-xl max-w-none" dangerouslySetInnerHTML={{ __html: reflection }} />
+            </Section>
+          </ScrollReveal>
+        </div>
+
+        <div className="section-divider">
+          <ScrollReveal>
+            <Section id="conclusion" title="Conclusion">
+              <div className="prose lg:prose-xl max-w-none" dangerouslySetInnerHTML={{ __html: conclusion }} />
+            </Section>
+          </ScrollReveal>
+        </div>
+
+        <div className="section-divider">
+          <ScrollReveal>
+            <Section id="references" title="References">
+              <ul>
+                {references.map((reference) => (
+                  <ReferenceItem key={reference.url} refItem={reference} />
+                ))}
+              </ul>
+            </Section>
+          </ScrollReveal>
+        </div>
+      </div>
     </div>
   );
 }
+
