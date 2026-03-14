@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type NavItem = { id: string; label: string };
 
@@ -16,6 +16,7 @@ const items: NavItem[] = [
 export function Navbar() {
 	const [activeSection, setActiveSection] = useState<string>("");
 	const [isOpen, setIsOpen] = useState(false);
+	const menuRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
 		const observer = new IntersectionObserver(
@@ -41,6 +42,20 @@ export function Navbar() {
 			});
 		};
 	}, []);
+
+	useEffect(() => {
+		if (!isOpen) return;
+
+		const handleClickOutside = (event: MouseEvent) => {
+			if (!menuRef.current) return;
+			if (!menuRef.current.contains(event.target as Node)) {
+				setIsOpen(false);
+			}
+		};
+
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => document.removeEventListener("mousedown", handleClickOutside);
+	}, [isOpen]);
 
 	const handleClick = (id: string) => {
 		document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -94,8 +109,13 @@ export function Navbar() {
 					</ul>
 				</div>
 			</div>
-			{isOpen && (
-				<div className="border-t border-[#b0bea9]/40 bg-[#f1f7ee] px-4 py-4 md:hidden">
+			<div
+				ref={menuRef}
+				className={`md:hidden overflow-hidden border-t border-[#b0bea9]/40 bg-[#f1f7ee] transition-all duration-300 ease-out ${
+					isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+				}`}
+			>
+				<div className="px-4 py-4">
 					<ul className="flex flex-col gap-4">
 						{items.map((item) => (
 							<li key={item.id}>
@@ -115,7 +135,7 @@ export function Navbar() {
 						))}
 					</ul>
 				</div>
-			)}
+			</div>
 		</nav>
 	);
 }
