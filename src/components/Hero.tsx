@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { film } from '@/data/film';
+import { withBasePath } from '@/lib/withBasePath';
 
 const Hero = () => {
   const [offsetY, setOffsetY] = useState(0);
@@ -12,12 +13,14 @@ const Hero = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const bannerUrl = withBasePath(film.banner);
+
   return (
     <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-top z-0"
         style={{
-          backgroundImage: `url(${film.banner})`,
+          backgroundImage: `url(${bannerUrl})`,
           backgroundPosition: "center top",
           transform: `translateY(${offsetY * 0.3}px)`,
         }}

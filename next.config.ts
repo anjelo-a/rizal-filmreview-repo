@@ -8,4 +8,7 @@ export default {
   images: {
     unoptimized: true,
   },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: `/${repoName}`,
+  },
 };

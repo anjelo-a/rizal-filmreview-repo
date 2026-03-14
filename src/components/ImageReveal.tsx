@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from 'react';
+import { withBasePath } from '@/lib/withBasePath';
 
 interface ImageRevealProps {
   src: string;
@@ -34,10 +35,12 @@ const ImageReveal = ({ src, alt, className }: ImageRevealProps) => {
     };
   }, []);
 
+  const resolvedSrc = withBasePath(src);
+
   return (
     <img
       ref={ref}
-      src={src}
+      src={resolvedSrc}
       alt={alt}
       className={className}
       style={{
