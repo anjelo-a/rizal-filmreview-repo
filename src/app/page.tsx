@@ -40,6 +40,10 @@ export default async function Page() {
   const classDiscussion = await getMarkdownContent('class-discussion');
   const reflection = await getMarkdownContent('reflection');
   const conclusion = await getMarkdownContent('conclusion');
+  const getReferenceKey = (
+    reference: (typeof references)[number],
+    index: number,
+  ) => reference.url ?? `${reference.author}-${reference.year}-${reference.title}-${index}`;
 
   return (
     <div>
@@ -140,8 +144,8 @@ export default async function Page() {
           <ScrollReveal>
             <Section id="references" title="References">
               <ul>
-                {references.map((reference) => (
-                  <ReferenceItem key={reference.url} refItem={reference} />
+                {references.map((reference, index) => (
+                  <ReferenceItem key={getReferenceKey(reference, index)} refItem={reference} />
                 ))}
               </ul>
             </Section>
