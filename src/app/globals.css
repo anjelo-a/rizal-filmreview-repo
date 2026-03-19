@@ -6,6 +6,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-display:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-body: "Avenir Next", "Segoe UI", Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,11 +23,13 @@ html {
 }
 
 body {
-  background-color: #f1f7ee;
-  color: #333;
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: var(--font-body);
+}
+
+.font-serif {
+  font-family: var(--font-display);
 }
 
 section {
@@ -39,7 +44,7 @@ section {
 
 .section-divider::before,
 .section-divider::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -51,7 +56,12 @@ section {
 
 .section-divider::before {
   top: -75px; /* Position gradient before the section */
-  background: linear-gradient(to bottom, rgba(241, 247, 238, 0), #e0edc5, #f1f7ee);
+  background: linear-gradient(
+    to bottom,
+    rgba(241, 247, 238, 0),
+    #e0edc5,
+    #f1f7ee
+  );
 }
 
 .section-divider::after {
