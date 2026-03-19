@@ -75,7 +75,7 @@ export function MobileAnalysis() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={panelTransition}
-              className="p-5"
+              className="absolute inset-0 overflow-y-auto p-5"
             >
               <p className="text-xs uppercase tracking-[0.34em] text-[#d8bc82]/80">
                 Analysis
@@ -106,7 +106,7 @@ export function MobileAnalysis() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -18 }}
               transition={panelTransition}
-              className="flex min-h-[34rem] flex-col p-5"
+              className="absolute inset-0 flex overflow-y-auto bg-[linear-gradient(180deg,rgba(15,11,9,0.985),rgba(10,8,6,0.985))] flex-col p-5"
             >
               <button
                 type="button"
