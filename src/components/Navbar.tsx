@@ -8,6 +8,7 @@ const items: NavItem[] = [
 	{ id: "summary", label: "Film Summary" },
 	{ id: "analysis", label: "Analysis" },
 	{ id: "highlights", label: "Highlights" },
+	{ id: "class-discussion", label: "Connection to Class Discussion" },
 	{ id: "reflection", label: "Reflection" },
 	{ id: "conclusion", label: "Conclusion" },
 	{ id: "references", label: "References" },
@@ -141,4 +142,3 @@ export function Navbar() {
 }
 
 export default Navbar;
-
