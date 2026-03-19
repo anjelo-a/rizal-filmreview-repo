@@ -9,8 +9,8 @@ type CameraControllerProps = {
   selectedTopic: Topic | null;
 };
 
-const defaultCameraPosition = new Vector3(0, 0.8, 9.5);
-const defaultFocusPoint = new Vector3(0, 0.3, 0);
+const defaultCameraPosition = new Vector3(0, 0.85, 9.4);
+const defaultFocusPoint = new Vector3(0, 0.35, 0);
 
 export function CameraController({ selectedTopic }: CameraControllerProps) {
   const { camera, pointer } = useThree();
@@ -20,8 +20,8 @@ export function CameraController({ selectedTopic }: CameraControllerProps) {
 
   useFrame((_, delta) => {
     const perspectiveCamera = camera as PerspectiveCamera;
-    const parallaxX = pointer.x * 0.28;
-    const parallaxY = pointer.y * 0.16;
+    const parallaxX = pointer.x * 0.26;
+    const parallaxY = pointer.y * 0.15;
 
     if (selectedTopic) {
       desiredPosition.current.set(...selectedTopic.cameraPosition);

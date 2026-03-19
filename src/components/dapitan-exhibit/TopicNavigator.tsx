@@ -2,13 +2,18 @@
 
 import type { Topic } from "@/types/dapitanTopic";
 
+const baseCardClassName =
+  "min-h-[96px] rounded-[18px] border px-3.5 py-3 text-left transition focus:outline-none focus:ring-2 focus:ring-[#e0c88f] focus:ring-offset-2 focus:ring-offset-[#120d09] md:min-h-[104px]";
+const idleCardClassName =
+  "border-white/6 bg-white/[0.02] text-[#e6d8c0] hover:border-[#d5b98a]/24 hover:bg-white/[0.05]";
+const activeCardClassName =
+  "border-[#f0c989]/55 bg-[linear-gradient(180deg,rgba(208,167,90,0.18),rgba(208,167,90,0.08))] text-[#fff7ea] shadow-[0_12px_28px_rgba(155,111,45,0.2)]";
+
 type TopicNavigatorProps = {
   topics: Topic[];
   selectedId: string | null;
   onSelect: (id: string) => void;
   onOverview: () => void;
-  onPrevious: () => void;
-  onNext: () => void;
 };
 
 export function TopicNavigator({
@@ -16,40 +21,41 @@ export function TopicNavigator({
   selectedId,
   onSelect,
   onOverview,
-  onPrevious,
-  onNext,
 }: TopicNavigatorProps) {
   return (
-    <div className="relative z-10 mt-5 space-y-4 rounded-[28px] border border-[#d5b98a]/16 bg-[#140f0c]/72 p-4 shadow-[0_18px_55px_rgba(0,0,0,0.32)] backdrop-blur-xl md:p-5">
+    <div className="relative z-10 space-y-3 rounded-[24px] border border-white/8 bg-[#140f0c]/58 p-3 shadow-[0_18px_45px_rgba(0,0,0,0.22)] backdrop-blur-lg md:space-y-4 md:p-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-xs uppercase tracking-[0.34em] text-[#d8bc82]/80">
-          Topic Navigator
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={onOverview}
-            className="rounded-full border border-[#d5b98a]/28 px-4 py-2 text-xs uppercase tracking-[0.24em] text-[#efe4d2] transition hover:border-[#e0c88f] hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-[#e0c88f] focus:ring-offset-2 focus:ring-offset-[#120d09]"
-          >
-            Overview
-          </button>
-          <button
-            type="button"
-            onClick={onPrevious}
-            className="rounded-full border border-[#d5b98a]/28 px-4 py-2 text-xs uppercase tracking-[0.24em] text-[#efe4d2] transition hover:border-[#e0c88f] hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-[#e0c88f] focus:ring-offset-2 focus:ring-offset-[#120d09]"
-          >
-            Previous
-          </button>
-          <button
-            type="button"
-            onClick={onNext}
-            className="rounded-full border border-[#d5b98a]/28 px-4 py-2 text-xs uppercase tracking-[0.24em] text-[#efe4d2] transition hover:border-[#e0c88f] hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-[#e0c88f] focus:ring-offset-2 focus:ring-offset-[#120d09]"
-          >
-            Next
-          </button>
+        <div>
+          <p className="text-xs uppercase tracking-[0.34em] text-[#d8bc82]/80">
+            Topic Navigator
+          </p>
+          <p className="mt-1 max-w-sm text-sm text-[#e6d8c0]/68">
+            Select an artifact record directly.
+          </p>
         </div>
       </div>
-      <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-5">
+      {/* The navigator is now a single data-driven card system. Overview lives
+          in the same grid as the topics, so navigation uses one reliable pattern
+          instead of mixing cards with separate text-button controls. */}
+      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
+        <button
+          type="button"
+          onClick={onOverview}
+          aria-pressed={selectedId === null}
+          className={`${baseCardClassName} ${
+            selectedId === null ? activeCardClassName : idleCardClassName
+          }`}
+        >
+          <p className="text-[10px] uppercase tracking-[0.3em] text-[#d8bc82]/70">
+            Overview
+          </p>
+          <p className="mt-1.5 font-serif text-[1rem] leading-tight md:text-[1.05rem]">
+            Archive Room
+          </p>
+          <p className="mt-2 max-w-[22ch] text-sm leading-5 text-current/78">
+            Return to the full exhibit view.
+          </p>
+        </button>
         {topics.map((topic, index) => {
           const isSelected = topic.id === selectedId;
           return (
@@ -57,17 +63,19 @@ export function TopicNavigator({
               key={topic.id}
               type="button"
               onClick={() => onSelect(topic.id)}
-              className={`rounded-[22px] border px-4 py-3 text-left transition focus:outline-none focus:ring-2 focus:ring-[#e0c88f] focus:ring-offset-2 focus:ring-offset-[#120d09] ${
-                isSelected
-                  ? "border-[#e0c88f]/70 bg-[#d0a75a]/16 text-[#fff7ea] shadow-[0_10px_30px_rgba(155,111,45,0.24)]"
-                  : "border-white/8 bg-white/[0.03] text-[#e6d8c0] hover:border-[#d5b98a]/35 hover:bg-white/[0.06]"
+              aria-pressed={isSelected}
+              className={`${baseCardClassName} ${
+                isSelected ? activeCardClassName : idleCardClassName
               }`}
             >
               <p className="text-[10px] uppercase tracking-[0.3em] text-[#d8bc82]/70">
                 Topic {index + 1}
               </p>
-              <p className="mt-2 font-serif text-lg leading-tight">
+              <p className="mt-1.5 font-serif text-[0.95rem] leading-tight md:text-base">
                 {topic.title}
+              </p>
+              <p className="mt-2 max-w-[22ch] text-sm leading-5 text-current/78">
+                {topic.artifactLabel}
               </p>
             </button>
           );

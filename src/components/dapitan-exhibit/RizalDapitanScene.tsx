@@ -68,13 +68,13 @@ function SceneContent({
         </mesh>
       </group>
       <Sparkles
-        count={70}
-        scale={[11, 5.5, 9]}
-        size={2.4}
+        count={64}
+        scale={[11.5, 5.8, 9]}
+        size={2.2}
         speed={0.18}
-        opacity={0.22}
+        opacity={0.2}
         color="#f0d8a6"
-        position={[0, 0.8, 0]}
+        position={[0, 0.75, 0]}
       />
       <ArtifactCluster
         topics={topics}
@@ -93,7 +93,7 @@ export function RizalDapitanScene(props: RizalDapitanSceneProps) {
       className="h-full w-full"
       shadows
       dpr={[1, 1.75]}
-      camera={{ position: [0, 0.8, 9.5], fov: 42 }}
+      camera={{ position: [0, 0.85, 9.4], fov: 42 }}
     >
       <SceneContent {...props} />
     </Canvas>

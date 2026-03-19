@@ -1,105 +1,99 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { Topic } from "@/types/dapitanTopic";
 import VerdictStamp from "./VerdictStamp";
 
 type ComparisonOverlayProps = {
   topic: Topic | null;
+  onClose: () => void;
 };
 
-export function ComparisonOverlay({ topic }: ComparisonOverlayProps) {
+export function ComparisonOverlay({ topic, onClose }: ComparisonOverlayProps) {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (!topic) return null;
+
   return (
-    <AnimatePresence mode="wait">
-      {topic ? (
-        <motion.aside
-          key={topic.id}
-          initial={{ opacity: 0, x: 28, y: 20 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          exit={{ opacity: 0, x: 18, y: 12 }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 flex h-full min-h-[420px] flex-col overflow-hidden rounded-[30px] border border-[#d5b98a]/18 bg-[linear-gradient(160deg,rgba(31,22,16,0.92),rgba(19,13,10,0.82))] p-5 text-[#f0e7da] shadow-[0_28px_90px_rgba(0,0,0,0.42)] backdrop-blur-xl md:p-7"
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(215,177,109,0.15),transparent_42%)]" />
-          <div className="relative flex flex-col gap-5">
-            <VerdictStamp verdict={topic.verdict} />
-            <div>
-              <p className="text-xs uppercase tracking-[0.34em] text-[#d8bc82]/80">
-                {topic.period ?? "Dapitan archive"}
-              </p>
-              <h3 className="mt-3 font-serif text-3xl text-[#fbf4e7]">
-                {topic.title}
-              </h3>
-            </div>
-            <div className="grid gap-4 lg:grid-cols-2">
-              <section className="border border-white/8 bg-white/4 p-4">
-                <p className="text-xs uppercase tracking-[0.3em] text-[#d8bc82]">
-                  What the Film Shows
-                </p>
-                <p className="mt-3 text-sm leading-7 text-[#efe4d2]">
-                  {topic.filmShows}
-                </p>
-              </section>
-              <section className="border border-[#d5b98a]/22 bg-[#c89b55]/[0.07] p-4">
-                <p className="text-xs uppercase tracking-[0.3em] text-[#f0d7a4]">
-                  What Actually Happened
-                </p>
-                <p className="mt-3 text-sm leading-7 text-[#fff6e8]">
-                  {topic.actualHistory}
-                </p>
-              </section>
-            </div>
-            <div className="grid gap-4 border-t border-white/10 pt-4 md:grid-cols-[0.85fr_1.15fr]">
-              <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-[#d8bc82]">
-                  Sources
-                </p>
-                <p className="mt-2 text-sm text-[#e6d8c0]">
-                  {topic.sources.join("; ")}
-                </p>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-[#d8bc82]">
-                  Significance
-                </p>
-                <p className="mt-2 text-sm leading-7 text-[#efe4d2]">
-                  {topic.significance}
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.aside>
-      ) : (
-        <motion.aside
-          key="overview"
-          initial={{ opacity: 0, x: 28 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 18 }}
-          transition={{ duration: 0.35 }}
-          className="relative z-10 flex h-full min-h-[420px] flex-col justify-end rounded-[30px] border border-[#d5b98a]/16 bg-[linear-gradient(180deg,rgba(25,18,13,0.28),rgba(18,12,9,0.82))] p-6 text-[#f0e7da] shadow-[0_28px_90px_rgba(0,0,0,0.32)] backdrop-blur-xl md:p-7"
-        >
-          <div className="absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_top,rgba(215,177,109,0.18),transparent_58%)]" />
-          <div className="relative space-y-5">
-            <p className="text-xs uppercase tracking-[0.34em] text-[#d8bc82]/80">
-              Overview
+    <motion.aside
+      initial={{ opacity: 0, x: 28, y: 20 }}
+      animate={{ opacity: 1, x: 0, y: 0 }}
+      exit={{ opacity: 0, x: 18, y: 12 }}
+      transition={
+        prefersReducedMotion
+          ? { duration: 0 }
+          : { duration: 0.34, ease: [0.22, 1, 0.36, 1] }
+      }
+      role="dialog"
+      aria-modal="false"
+      aria-label={`${topic.title} details`}
+      className="absolute inset-x-4 top-4 z-20 max-h-[calc(100%-1.5rem)] overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,rgba(31,22,16,0.78),rgba(19,13,10,0.7))] text-[#f0e7da] shadow-[0_28px_90px_rgba(0,0,0,0.36)] backdrop-blur-xl sm:inset-x-6 sm:top-6 md:inset-x-auto md:right-6 md:top-6 md:w-[min(420px,calc(100%-3rem))] lg:right-8 lg:top-8 lg:w-[430px] xl:w-[470px]"
+    >
+      {/* Focus mode uses an absolute overlay panel. Because it sits outside the
+          normal document flow, selecting a topic never expands the section or
+          pushes the navigator downward. */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(215,177,109,0.16),transparent_40%)]" />
+      <div className="relative flex h-full max-h-[calc(100%-0rem)] flex-col overflow-y-auto p-4 md:p-5">
+        <div className="flex items-start justify-between gap-4">
+          <VerdictStamp verdict={topic.verdict} />
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-lg text-[#f4e7ca] transition hover:border-[#e0c88f]/45 hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-[#e0c88f] focus:ring-offset-2 focus:ring-offset-[#120d09]"
+            aria-label="Close detail panel"
+          >
+            ×
+          </button>
+        </div>
+        <div className="mt-4">
+          <p className="text-xs uppercase tracking-[0.34em] text-[#d8bc82]/80">
+            {topic.period ?? "Dapitan archive"}
+          </p>
+          <h3 className="mt-2 max-w-[16ch] font-serif text-[1.65rem] leading-tight text-[#fbf4e7] md:text-[1.85rem] xl:text-[2rem]">
+            {topic.title}
+          </h3>
+        </div>
+        {/* Focus mode swaps in this fixed overlay instead of stacking extra
+            content under the scene, so detail reading stays readable without
+            causing any layout growth. */}
+        <div className="mt-4 grid gap-3">
+          <section className="rounded-[18px] border border-white/6 bg-white/[0.04] p-3.5">
+            <p className="text-xs uppercase tracking-[0.3em] text-[#d8bc82]">
+              Film
             </p>
-            <h3 className="font-serif text-3xl text-[#fbf4e7]">
-              Inspect the archive
-            </h3>
-            <p className="max-w-lg text-sm leading-7 text-[#e7dcc9]/90">
-              Select a floating artifact to compare the film’s depiction with
-              the documented historical record. The scene is arranged like a
-              curated exhibit, with each object standing in for a key point from
-              Rizal’s years in Dapitan.
+            <p className="mt-2 text-sm leading-6 text-[#efe4d2]">
+              {topic.filmShows}
             </p>
-            <div className="flex items-center gap-3 text-xs uppercase tracking-[0.24em] text-[#d0baa0]/80">
-              <span className="h-px flex-1 bg-gradient-to-r from-[#d8bc82]/60 to-transparent" />
-              Hover to highlight. Select to focus.
-            </div>
+          </section>
+          <section className="rounded-[18px] border border-[#d5b98a]/14 bg-[#c89b55]/[0.06] p-3.5">
+            <p className="text-xs uppercase tracking-[0.3em] text-[#f0d7a4]">
+              History
+            </p>
+            <p className="mt-2 text-sm leading-6 text-[#fff6e8]">
+              {topic.actualHistory}
+            </p>
+          </section>
+        </div>
+        <div className="mt-4 grid gap-3 border-t border-white/8 pt-3 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#d8bc82]">
+              Sources
+            </p>
+            <p className="mt-1.5 text-sm text-[#e6d8c0]">
+              {topic.sources.join("; ")}
+            </p>
           </div>
-        </motion.aside>
-      )}
-    </AnimatePresence>
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-[#d8bc82]">
+              Why It Matters
+            </p>
+            <p className="mt-1.5 text-sm leading-6 text-[#efe4d2]">
+              {topic.significance}
+            </p>
+          </div>
+        </div>
+      </div>
+    </motion.aside>
   );
 }
 
