@@ -22,9 +22,13 @@ async function getMarkdownContent(fileName: string) {
   try {
     const fileContents = fs.readFileSync(filePath, "utf8");
     const matterResult = matter(fileContents);
+    const contentWithoutTopHeading = matterResult.content.replace(
+      /^#\s+.+\n+/,
+      "",
+    );
     const processedContent = await remark()
       .use(html)
-      .process(matterResult.content);
+      .process(contentWithoutTopHeading);
     const contentHtml = processedContent.toString();
     return contentHtml;
   } catch (_error) {
@@ -41,7 +45,9 @@ export default async function Page() {
   const getReferenceKey = (
     reference: (typeof references)[number],
     index: number,
-  ) => reference.url ?? `${reference.author}-${reference.year}-${reference.title}-${index}`;
+  ) =>
+    reference.url ??
+    `${reference.author}-${reference.year}-${reference.title}-${index}`;
 
   return (
     <div>
@@ -103,8 +109,14 @@ export default async function Page() {
 
         <div className="section-divider">
           <ScrollReveal>
-            <Section id="class-discussion" title="Connection to Class Discussion">
-              <div className="prose lg:prose-xl max-w-none" dangerouslySetInnerHTML={{ __html: classDiscussion }} />
+            <Section
+              id="class-discussion"
+              title="Connection to Class Discussion"
+            >
+              <div
+                className="prose lg:prose-xl max-w-none"
+                dangerouslySetInnerHTML={{ __html: classDiscussion }}
+              />
             </Section>
           </ScrollReveal>
         </div>
@@ -136,7 +148,10 @@ export default async function Page() {
             <Section id="references" title="References">
               <ul>
                 {references.map((reference, index) => (
-                  <ReferenceItem key={getReferenceKey(reference, index)} refItem={reference} />
+                  <ReferenceItem
+                    key={getReferenceKey(reference, index)}
+                    refItem={reference}
+                  />
                 ))}
               </ul>
             </Section>
