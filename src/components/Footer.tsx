@@ -7,9 +7,9 @@ export const Footer: React.FC = () => {
 				<div className="font-semibold text-gray-900">University of Makati</div>
 				<div>Rizal – Life, Works, and Writings</div>
 				<div>Midterm Film Review Project</div>
-				<div className="mt-2">Student(s): [Student Names]</div>
-				<div>Instructor: [Instructor Name]</div>
-				<div>Submission Date: [Date]</div>
+				<div className="mt-2">Students: [Arnaez, Anjelo Benedict. Balocating, Aaliyah Marie]</div>
+				<div>Instructor: [Joseph Rimscal]</div>
+				<div>Submission Date: [3/20/2026]</div>
 			</div>
 		</footer>
 	);
