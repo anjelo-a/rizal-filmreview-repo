@@ -6,7 +6,6 @@ import html from "remark-html";
 
 import Hero from "@/components/Hero";
 import Section from "@/components/Section";
-import HighlightCard from "@/components/HighlightCard";
 import ReferenceItem from "@/components/ReferenceItem";
 import ScrollReveal from "@/components/ScrollReveal";
 import ImageReveal from "@/components/ImageReveal";
@@ -14,7 +13,6 @@ import QuoteSection from "@/components/QuoteSection";
 import RizalDapitanExperience from "@/components/dapitan-exhibit/RizalDapitanExperience";
 import ConclusionVerdictSection from "@/components/conclusion-rating/ConclusionVerdictSection";
 
-import { highlights } from "@/data/highlights";
 import { references } from "@/data/references";
 import { film } from "@/data/film";
 
@@ -40,6 +38,7 @@ async function getMarkdownContent(fileName: string) {
 export default async function Page() {
   const introduction = await getMarkdownContent("introduction");
   const summary = await getMarkdownContent("summary");
+  const analysis = await getMarkdownContent("analysis");
   const classDiscussion = await getMarkdownContent("class-discussion");
   const reflection = await getMarkdownContent("reflection");
   const conclusion = await getMarkdownContent("conclusion");
@@ -84,28 +83,21 @@ export default async function Page() {
         <QuoteSection />
 
         <div className="section-divider">
-          <RizalDapitanExperience />
+          <ScrollReveal>
+            <Section
+              id="analysis"
+              title="Historical Accuracy and Creative Liberties"
+            >
+              <div
+                className="prose lg:prose-xl max-w-none"
+                dangerouslySetInnerHTML={{ __html: analysis }}
+              />
+            </Section>
+          </ScrollReveal>
         </div>
 
         <div className="section-divider">
-          <Section
-            id="highlights"
-            title="Notes & Highlights"
-            className="py-16 min-h-[70vh] flex items-center"
-            containerClassName="mx-auto w-full max-w-6xl px-6"
-            contentClassName="max-w-none"
-          >
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {highlights.map((highlight, index) => (
-                <HighlightCard
-                  key={highlight.title}
-                  item={highlight}
-                  delay={index * 100}
-                  direction={index % 2 === 0 ? "left" : "right"}
-                />
-              ))}
-            </div>
-          </Section>
+          <RizalDapitanExperience />
         </div>
 
         <div className="section-divider">

@@ -6,8 +6,8 @@ type NavItem = { id: string; label: string };
 const items: NavItem[] = [
 	{ id: "introduction", label: "Introduction" },
 	{ id: "summary", label: "Film Summary" },
-	{ id: "analysis", label: "Analysis" },
-	{ id: "highlights", label: "Highlights" },
+	{ id: "analysis", label: "Historical Accuracy" },
+	{ id: "film-vs-history", label: "3D Artifacts" },
 	{ id: "class-discussion", label: "Connection to Class Discussion" },
 	{ id: "reflection", label: "Reflection" },
 	{ id: "conclusion", label: "Conclusion" },

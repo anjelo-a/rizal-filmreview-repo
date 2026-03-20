@@ -7,7 +7,7 @@ import SummarySection from "./SummarySection";
 export function RizalDapitanExperience() {
   return (
     <section
-      id="analysis"
+      id="film-vs-history"
       className="relative overflow-hidden bg-[radial-gradient(circle_at_top,#332214_0%,#120d09_52%,#080605_100%)] py-4 text-white sm:py-6 lg:py-8"
     >
       <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(201,161,94,0.08),transparent_25%,transparent_70%,rgba(102,70,34,0.12))]" />

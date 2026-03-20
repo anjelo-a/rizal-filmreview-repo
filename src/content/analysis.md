@@ -1,6 +1,6 @@
-# Historical Accuracy & Analysis
+# Historical Accuracy and Creative Liberties
 
-The film navigates a balance between historical fidelity and cinematic storytelling. Many everyday details — the community projects, Rizal's medical practice, and the cultural setting — are handled with care and likely reflect historical records. At the same time, the narrative compresses time and simplifies some political dynamics for clarity.
+The film Rizal sa Dapitan demonstrates a strong commitment to historical facts. Major events, such as Rizal’s work as a doctor and educator, his relationship with Josephine Bracken, and the Church’s refusal to marry them, are well-documented. According to Leon Ma. Guerrero (1963), Rizal was indeed exiled in Dapitan for exactly four years, from 1892 to 1896. His role as an ophthalmologist is also historically verified, as Austin Coates (1969) documents his treatment of various patients during this period.
 
-From a cinematic perspective, the director favors quiet, reflective scenes that deepen our understanding of Rizal's character. The film’s strengths lie in its humanization of Rizal and its attention to quotidian acts of nation-building.
 
+However, the film takes creative liberties by emphasizing the romantic narrative with Josephine Bracken more than Guerrero’s biography does. While Guerrero (1963) discusses their relationship, he focuses more on Rizal’s intellectual work and political philosophy. The film flips this, making the romance central to the story. This choice is justified as it humanizes Rizal, showing him not just as a "thinking machine" but as a man capable of love and vulnerability. Furthermore, the film’s authenticity is enhanced by shooting on location in Dapitan using 16mm film stock, which provides a raw, documentary-like feel that makes the 1890s setting feel real rather than a studio recreation.
