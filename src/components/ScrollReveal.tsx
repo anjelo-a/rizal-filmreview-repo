@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useEffect, useState, ReactNode } from 'react';
+import type { ReactNode } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface ScrollRevealProps {
   children: ReactNode;
   delay?: number;
   threshold?: number;
-  direction?: 'up' | 'left' | 'right';
+  direction?: "up" | "left" | "right";
   repeat?: boolean;
 }
 
@@ -14,66 +15,33 @@ const ScrollReveal = ({
   children,
   delay = 0,
   threshold = 0.1,
-  direction = 'up',
+  direction = "up",
   repeat = true,
 }: ScrollRevealProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (!repeat) {
-            observer.unobserve(entry.target);
-          }
-          return;
-        }
-
-        if (repeat) {
-          setIsVisible(false);
-        }
-      },
-      { threshold, rootMargin: "0px 0px -10% 0px" }
-    );
-
-    observer.observe(element);
-
-    return () => {
-      observer.unobserve(element);
-    };
-  }, [repeat, threshold]);
-
-  const getTransform = () => {
-    if (isVisible) return 'translate(0, 0)';
-    switch (direction) {
-      case 'left':
-        return 'translateX(-40px)';
-      case 'right':
-        return 'translateX(40px)';
-      case 'up':
-      default:
-        return 'translateY(40px)';
-    }
-  };
+  const hiddenTransform = prefersReducedMotion
+    ? { opacity: 0 }
+    : direction === "left"
+      ? { opacity: 0, x: -32 }
+      : direction === "right"
+        ? { opacity: 0, x: 32 }
+        : { opacity: 0, y: 32 };
 
   return (
-    <div
-      ref={ref}
-      style={{
-        transition: `opacity 600ms, transform 600ms`,
-        transitionDelay: `${delay}ms`,
-        opacity: isVisible ? 1 : 0,
-        transform: getTransform(),
-        willChange: "opacity, transform",
+    <motion.div
+      initial={hiddenTransform}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: !repeat, amount: threshold }}
+      transition={{
+        delay: delay / 1000,
+        duration: prefersReducedMotion ? 0 : 0.6,
+        ease: [0.22, 1, 0.36, 1],
       }}
+      style={{ willChange: "opacity, transform" }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 

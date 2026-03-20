@@ -8,7 +8,6 @@ import Hero from "@/components/Hero";
 import Section from "@/components/Section";
 import ReferenceItem from "@/components/ReferenceItem";
 import ScrollReveal from "@/components/ScrollReveal";
-import QuoteSection from "@/components/QuoteSection";
 import RizalDapitanExperience from "@/components/dapitan-exhibit/RizalDapitanExperience";
 import ConclusionVerdictSection from "@/components/conclusion-rating/ConclusionVerdictSection";
 
@@ -51,38 +50,41 @@ export default async function Page() {
     <div>
       <Hero />
       <div className="container mx-auto px-4">
-        <ScrollReveal>
+        <ScrollReveal repeat={false}>
           <Section id="introduction" title="Introduction">
-            <div
-              className="prose lg:prose-xl max-w-none"
-              dangerouslySetInnerHTML={{ __html: introduction }}
-            />
+            <ScrollReveal direction="up" threshold={0.18}>
+              <div
+                className="prose lg:prose-xl max-w-none"
+                dangerouslySetInnerHTML={{ __html: introduction }}
+              />
+            </ScrollReveal>
           </Section>
         </ScrollReveal>
 
         <div className="section-divider">
-          <ScrollReveal>
+          <ScrollReveal repeat={false}>
             <Section id="summary" title="Film Summary">
-              <div
-                className="prose lg:prose-xl max-w-none"
-                dangerouslySetInnerHTML={{ __html: summary }}
-              />
+              <ScrollReveal direction="up" threshold={0.18}>
+                <div
+                  className="prose lg:prose-xl max-w-none"
+                  dangerouslySetInnerHTML={{ __html: summary }}
+                />
+              </ScrollReveal>
             </Section>
           </ScrollReveal>
         </div>
-
-        <QuoteSection />
-
         <div className="section-divider">
-          <ScrollReveal>
+          <ScrollReveal repeat={false}>
             <Section
               id="analysis"
               title="Historical Accuracy and Creative Liberties"
             >
-              <div
-                className="prose lg:prose-xl max-w-none"
-                dangerouslySetInnerHTML={{ __html: analysis }}
-              />
+              <ScrollReveal direction="up" threshold={0.18}>
+                <div
+                  className="prose lg:prose-xl max-w-none"
+                  dangerouslySetInnerHTML={{ __html: analysis }}
+                />
+              </ScrollReveal>
             </Section>
           </ScrollReveal>
         </div>
@@ -92,55 +94,65 @@ export default async function Page() {
         </div>
 
         <div className="section-divider">
-          <ScrollReveal>
+          <ScrollReveal repeat={false}>
             <Section
               id="class-discussion"
               title="Connection to Class Discussion"
             >
-              <div
-                className="prose lg:prose-xl max-w-none"
-                dangerouslySetInnerHTML={{ __html: classDiscussion }}
-              />
+              <ScrollReveal direction="up" threshold={0.18}>
+                <div
+                  className="prose lg:prose-xl max-w-none"
+                  dangerouslySetInnerHTML={{ __html: classDiscussion }}
+                />
+              </ScrollReveal>
             </Section>
           </ScrollReveal>
         </div>
 
         <div className="section-divider">
-          <ScrollReveal>
+          <ScrollReveal repeat={false}>
             <Section id="reflection" title="Reflection">
-              <div
-                className="prose lg:prose-xl max-w-none"
-                dangerouslySetInnerHTML={{ __html: reflection }}
-              />
+              <ScrollReveal direction="up" threshold={0.18}>
+                <div
+                  className="prose lg:prose-xl max-w-none"
+                  dangerouslySetInnerHTML={{ __html: reflection }}
+                />
+              </ScrollReveal>
             </Section>
           </ScrollReveal>
         </div>
 
         <div className="section-divider">
-          <ScrollReveal>
+          <ScrollReveal repeat={false}>
             <Section id="conclusion" title="Conclusion">
-              <div
-                className="prose lg:prose-xl max-w-none"
-                dangerouslySetInnerHTML={{ __html: conclusion }}
-              />
-              <div className="mt-12 not-prose">
-                <ConclusionVerdictSection />
-              </div>
+              <ScrollReveal direction="up" threshold={0.18}>
+                <div
+                  className="prose lg:prose-xl max-w-none"
+                  dangerouslySetInnerHTML={{ __html: conclusion }}
+                />
+              </ScrollReveal>
+              <ScrollReveal delay={120} direction="up" threshold={0.12}>
+                <div className="mt-12 not-prose">
+                  <ConclusionVerdictSection />
+                </div>
+              </ScrollReveal>
             </Section>
           </ScrollReveal>
         </div>
 
         <div className="section-divider">
-          <ScrollReveal>
+          <ScrollReveal repeat={false}>
             <Section id="references" title="References">
-              <ul>
-                {references.map((reference, index) => (
-                  <ReferenceItem
-                    key={getReferenceKey(reference, index)}
-                    refItem={reference}
-                  />
-                ))}
-              </ul>
+              <ScrollReveal direction="up" threshold={0.18}>
+                <ul>
+                  {references.map((reference, index) => (
+                    <ReferenceItem
+                      key={getReferenceKey(reference, index)}
+                      refItem={reference}
+                    />
+                  ))}
+                </ul>
+              </ScrollReveal>
             </Section>
           </ScrollReveal>
         </div>
