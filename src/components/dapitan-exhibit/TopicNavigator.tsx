@@ -30,7 +30,8 @@ export function TopicNavigator({
             Topic Navigator
           </p>
           <p className="mt-1 max-w-sm text-sm text-[#e6d8c0]/68">
-            Select an artifact record directly.
+            Click any topic card to inspect that artifact and compare film vs
+            history.
           </p>
         </div>
       </div>

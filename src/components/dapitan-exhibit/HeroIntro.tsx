@@ -3,11 +3,10 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 type HeroIntroProps = {
-  onExplore: () => void;
   isFocused?: boolean;
 };
 
-export function HeroIntro({ onExplore, isFocused = false }: HeroIntroProps) {
+export function HeroIntro({ isFocused = false }: HeroIntroProps) {
   const prefersReducedMotion = useReducedMotion();
   const contentTransition = prefersReducedMotion ? { duration: 0 } : { duration: 0.22 };
 
@@ -48,17 +47,11 @@ export function HeroIntro({ onExplore, isFocused = false }: HeroIntroProps) {
           y: isFocused ? -8 : 0,
         }}
         transition={contentTransition}
-        className="pointer-events-auto mt-4 flex flex-wrap items-center gap-3 md:mt-5"
+        className="mt-4 max-w-lg rounded-[20px] border border-[#d2ae69]/18 bg-[#1a130e]/62 px-4 py-3 text-sm text-[#efe4d2] shadow-[0_18px_40px_rgba(0,0,0,0.18)] md:mt-5 md:px-5"
       >
-        <button
-          type="button"
-          onClick={onExplore}
-          className="rounded-full border border-[#d2ae69]/60 bg-[#caa05a]/18 px-5 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-[#f6e2b0] transition hover:border-[#e0c88f] hover:bg-[#caa05a]/28 focus:outline-none focus:ring-2 focus:ring-[#e0c88f] focus:ring-offset-2 focus:ring-offset-[#120d09] md:text-sm"
-        >
-          Inspect the Evidence
-        </button>
-        <p className="text-[11px] uppercase tracking-[0.3em] text-[#d0baa0]/82">
-          Hover to highlight. Click to inspect.
+        <p className="uppercase tracking-[0.28em] text-[#d8bc82]/82">
+          Choose a topic below to inspect a specific artifact and compare the
+          film scene with the historical record.
         </p>
       </motion.div>
       <motion.div

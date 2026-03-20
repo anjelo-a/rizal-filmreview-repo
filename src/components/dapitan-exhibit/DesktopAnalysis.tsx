@@ -26,10 +26,6 @@ export function DesktopAnalysis() {
     setSelectedId(null);
   };
 
-  const handleExplore = () => {
-    setSelectedId(dapitanTopics[0]?.id ?? null);
-  };
-
   const isFocusMode = selectedTopic !== null;
   const sceneTransition = prefersReducedMotion
     ? { duration: 0 }
@@ -75,7 +71,7 @@ export function DesktopAnalysis() {
               isFocusMode ? "pointer-events-none" : "pointer-events-auto"
             }`}
           >
-            <HeroIntro onExplore={handleExplore} isFocused={isFocusMode} />
+            <HeroIntro isFocused={isFocusMode} />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 18 }}

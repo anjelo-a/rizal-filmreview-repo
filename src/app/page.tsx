@@ -8,13 +8,11 @@ import Hero from "@/components/Hero";
 import Section from "@/components/Section";
 import ReferenceItem from "@/components/ReferenceItem";
 import ScrollReveal from "@/components/ScrollReveal";
-import ImageReveal from "@/components/ImageReveal";
 import QuoteSection from "@/components/QuoteSection";
 import RizalDapitanExperience from "@/components/dapitan-exhibit/RizalDapitanExperience";
 import ConclusionVerdictSection from "@/components/conclusion-rating/ConclusionVerdictSection";
 
 import { references } from "@/data/references";
-import { film } from "@/data/film";
 
 async function getMarkdownContent(fileName: string) {
   const filePath = path.join(process.cwd(), "src", "content", `${fileName}.md`);
@@ -65,17 +63,10 @@ export default async function Page() {
         <div className="section-divider">
           <ScrollReveal>
             <Section id="summary" title="Film Summary">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div
-                  className="prose lg:prose-xl max-w-none"
-                  dangerouslySetInnerHTML={{ __html: summary }}
-                />
-                <ImageReveal
-                  src={film.poster}
-                  alt={`${film.title} poster`}
-                  className="rounded-lg shadow-lg w-full h-auto"
-                />
-              </div>
+              <div
+                className="prose lg:prose-xl max-w-none"
+                dangerouslySetInnerHTML={{ __html: summary }}
+              />
             </Section>
           </ScrollReveal>
         </div>
