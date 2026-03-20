@@ -12,6 +12,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import ImageReveal from "@/components/ImageReveal";
 import QuoteSection from "@/components/QuoteSection";
 import RizalDapitanExperience from "@/components/dapitan-exhibit/RizalDapitanExperience";
+import ConclusionVerdictSection from "@/components/conclusion-rating/ConclusionVerdictSection";
 
 import { highlights } from "@/data/highlights";
 import { references } from "@/data/references";
@@ -139,6 +140,9 @@ export default async function Page() {
                 className="prose lg:prose-xl max-w-none"
                 dangerouslySetInnerHTML={{ __html: conclusion }}
               />
+              <div className="mt-12 not-prose">
+                <ConclusionVerdictSection />
+              </div>
             </Section>
           </ScrollReveal>
         </div>
