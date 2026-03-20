@@ -1,25 +1,24 @@
 import type { Reference } from "../types/reference";
 
 export const references: Reference[] = [
-	{
-		author: "Aguiluz, T.",
-		year: 1997,
-		title: "Rizal in Dapitan",
-		source: "Film",
-	},
-	{
-		author: "Schumacher, J.",
-		year: 1991,
-		title: "The Making of a National Hero",
-		source: "Historical Journal",
-		url: "https://example.edu/making-of-hero",
-	},
-	{
-		author: "Rizal, J.",
-		year: "1896",
-		title: "Selected Writings",
-		source: "Collected Works",
-	},
+  {
+    author: "Aguiluz, T. (Director)",
+    year: 1997,
+    title: "Rizal sa Dapitan",
+    source: "Film",
+  },
+  {
+    author: "Coates, A.",
+    year: 1969,
+    title: "Rizal: Philippine Nationalist and Martyr",
+    source: "Book",
+  },
+  {
+    author: "Guerrero, L. M.",
+    year: 1963,
+    title: "The First Filipino: A Biography of Jose Rizal",
+    source: "Book",
+  },
 ];
 
 export default references;
